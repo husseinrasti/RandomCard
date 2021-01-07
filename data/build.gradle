@@ -1,0 +1,89 @@
+import dependencies.Java
+import dependencies.Versions
+import dependencies.Application
+import dependencies.dependencies.*
+
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
+
+android {
+    androidExtensions { experimental = true }
+
+    compileSdkVersion Versions.compileSdk
+    buildToolsVersion Versions.buildToolsVersion
+
+    defaultConfig {
+        multiDexEnabled true
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+        versionCode Application.versionCode
+        versionName Application.versionName
+
+        testInstrumentationRunner AndroidTestDependencies.testInstrumentationRunner
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = Java.javaVersion
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BASE_URL", "\"" + Application.baseUrl + "\""
+        }
+        debug {
+            minifyEnabled false
+            buildConfigField "String", "BASE_URL", "\"" + Application.baseUrl + "\""
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation project(":domain")
+
+    implementation Dependencies.kotlinStandardLibrary
+    implementation Dependencies.ktx
+
+    implementation Dependencies.retrofit
+    implementation Dependencies.retrofitGson
+    implementation Dependencies.retrofitRxJavaAdapter
+    implementation Dependencies.googleGson
+    implementation Dependencies.okHttp
+    implementation Dependencies.okHttpInterceptor
+
+    implementation Dependencies.dagger
+
+    implementation Dependencies.rxKotlin
+    implementation Dependencies.rxJava
+    implementation Dependencies.rxAndroid
+
+    testImplementation TestDependencies.mockito
+    testImplementation TestDependencies.mockitoInline
+    testImplementation TestDependencies.mockitoKotlin
+    testImplementation TestDependencies.jupiterApi
+    testImplementation TestDependencies.jupiterParams
+    testImplementation TestDependencies.junit4
+    testRuntimeOnly TestDependencies.jupiterEngine
+
+    androidTestImplementation TestDependencies.junitTestAndroidX
+}

@@ -1,0 +1,88 @@
+import dependencies.dependencies.*
+import dependencies.Application
+import dependencies.Versions
+import dependencies.Java
+import dependencies.AnnotationProcessing
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
+
+android {
+    androidExtensions { experimental = true }
+
+    compileSdkVersion Versions.compileSdk
+    buildToolsVersion Versions.buildToolsVersion
+
+    defaultConfig {
+        multiDexEnabled true
+        applicationId Application.id
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+        versionCode Application.versionCode
+        versionName Application.versionName
+        testInstrumentationRunner AndroidTestDependencies.testInstrumentationRunner
+        flavorDimensions "default"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = Java.javaVersion
+    }
+
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation Dependencies.kotlinStandardLibrary
+    implementation Dependencies.ktx
+    implementation SupportDependencies.appcompat
+
+    implementation Dependencies.dagger
+    implementation Dependencies.daggerAndroid
+    implementation Dependencies.daggerAndroidSupport
+    kapt AnnotationProcessing.daggerCompiler
+    kapt AnnotationProcessing.daggerCompilerAndroid
+
+    implementation Dependencies.retrofit
+    implementation Dependencies.retrofitGson
+    implementation Dependencies.retrofitRxJavaAdapter
+    implementation Dependencies.googleGson
+    implementation Dependencies.okHttp
+    implementation Dependencies.okHttpInterceptor
+
+    implementation project(":data")
+    implementation project(":domain")
+    implementation project(":presentation")
+
+}

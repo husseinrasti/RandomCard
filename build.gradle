@@ -1,0 +1,30 @@
+import dependencies.Build
+import dependencies.Repositories
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        maven { url = Repositories.jitPack }
+        mavenCentral()
+    }
+    dependencies {
+        classpath(Build.buildTools)
+        classpath(Build.kotlinGradlePlugin)
+        classpath(Build.googleServices)
+        classpath(Build.crashlyticsGradle)
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url = Repositories.jitPack }
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

@@ -1,0 +1,88 @@
+import dependencies.Java
+import dependencies.Versions
+import dependencies.Application
+import dependencies.dependencies.AndroidTestDependencies
+import dependencies.dependencies.Dependencies
+import dependencies.dependencies.SupportDependencies
+import dependencies.dependencies.ThirdParty
+
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
+
+android {
+    androidExtensions { experimental = true }
+
+    compileSdkVersion Versions.compileSdk
+    buildToolsVersion Versions.buildToolsVersion
+
+    defaultConfig {
+        multiDexEnabled true
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+        versionCode Application.versionCode
+        versionName Application.versionName
+
+        testInstrumentationRunner AndroidTestDependencies.testInstrumentationRunner
+        consumerProguardFiles "consumer-rules.pro"
+        flavorDimensions "default"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = Java.javaVersion
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation Dependencies.kotlinStandardLibrary
+    implementation Dependencies.ktx
+    implementation SupportDependencies.appcompat
+    implementation SupportDependencies.legacySupport
+    implementation SupportDependencies.materialDesign
+    implementation SupportDependencies.constraintlayout
+    implementation SupportDependencies.cardview
+    implementation SupportDependencies.recyclerview
+
+    implementation Dependencies.rxKotlin
+    implementation Dependencies.rxAndroid
+
+    implementation Dependencies.fragmentKtx
+    implementation Dependencies.lifecycleExt
+    implementation Dependencies.lifecycleRuntime
+    implementation Dependencies.lifecycleViewmodel
+    implementation Dependencies.lifecycleCommon
+
+    implementation Dependencies.dagger
+    implementation Dependencies.daggerAndroid
+    implementation Dependencies.daggerAndroidSupport
+
+    implementation ThirdParty.glide
+    annotationProcessor ThirdParty.glideCompiler
+
+    implementation project(":domain")
+}
