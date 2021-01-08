@@ -12,6 +12,7 @@ buildscript {
         classpath(Build.buildTools)
         classpath(Build.kotlinGradlePlugin)
         classpath(Build.daggerHilt)
+        classpath(Build.navigation)
     }
 }
 

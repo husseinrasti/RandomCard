@@ -8,7 +8,7 @@ import retrofit2.http.GET
 
 interface CardApi {
 
-    @GET("tempelate.json")
+    @GET("db")
     fun getCards(): Single<Response<CardWrapper>>
 
 }

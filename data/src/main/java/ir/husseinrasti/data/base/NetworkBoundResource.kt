@@ -2,9 +2,11 @@ package ir.husseinrasti.data.base
 
 
 import android.content.res.Resources
+import android.util.Log
 import androidx.annotation.MainThread
 import androidx.annotation.StringRes
 import androidx.annotation.WorkerThread
+import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -33,12 +35,18 @@ abstract class NetworkBoundResource<DomainObject, ApiObject> @MainThread constru
     private val publishSubject = PublishSubject.create<ResultState<DomainObject>>()
 
     init {
+        Log.i("card", "Init NetworkBoundResource")
         @Suppress("LeakingThis")
-        fetchFromNetwork()
+        if (shouldFetch()) {
+            fetchFromNetwork()
+        } else {
+            setValue(ResultState.success(loadFromDb()))
+        }
     }
 
     @MainThread
-    private fun setValue(newValue: ResultState<DomainObject>?) {
+    private fun setValue(newValue: ResultState<DomainObject>) {
+        Log.i("card", "set value: ${newValue.data}")
         publishSubject.onNext(newValue)
         publishSubject.onComplete()
     }
@@ -48,27 +56,25 @@ abstract class NetworkBoundResource<DomainObject, ApiObject> @MainThread constru
             .subscribe { result, exp ->
                 when (result.status) {
                     SUCCESS -> {
-                        loadFromDb().subscribe {
-                            setValue(ResultState.success(it))
-                        }
+                        setValue(ResultState.success(loadFromDb()))
                     }
                     ERROR -> {
-                        setValue(ResultState.error(Failure.FailureWithMessage(exp.message, FAILED_CODE)))
+                        setValue(ResultState.error(Failure.FailureWithMessage(resources.getString(R.string.msgFailed), FAILED_CODE)))
                     }
                 }
             }
     }
 
-    fun asResult(): Observable<ResultState<DomainObject>> = publishSubject
+    fun asResult(): PublishSubject<ResultState<DomainObject>> = publishSubject
 
     @WorkerThread
-    protected abstract fun saveCallResult(data: ApiObject?)
+    protected abstract fun saveCallResult(data: ApiObject)
 
     @MainThread
-    protected abstract fun shouldFetch(data: DomainObject?): Boolean
+    protected abstract fun shouldFetch(): Boolean
 
     @MainThread
-    protected abstract fun loadFromDb(): Observable<DomainObject>
+    protected abstract fun loadFromDb(): DomainObject
 
     @MainThread
     protected abstract fun createCall(): Single<Response<ApiObject>>

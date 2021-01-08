@@ -8,4 +8,5 @@ object Build {
     val crashlyticsGradle = "com.google.firebase:firebase-crashlytics-gradle:${Versions.crashlyticsGradle}"
     val fabricIo = "io.fabric.tools:gradle:${Versions.fabricIo}"
     val daggerHilt = "com.google.dagger:hilt-android-gradle-plugin:${Versions.daggerHilt}"
+    val navigation = "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
 }

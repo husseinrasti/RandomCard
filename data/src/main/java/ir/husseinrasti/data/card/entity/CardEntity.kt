@@ -10,9 +10,9 @@ data class CardEntity(
     @SerializedName("description")
     val description: String,
     @SerializedName("image")
-    val image: String,
+    val image: String?,
     @SerializedName("sound")
-    val sound: String,
+    val sound: String?,
     @SerializedName("tag")
     val tag: String,
     @SerializedName("title")

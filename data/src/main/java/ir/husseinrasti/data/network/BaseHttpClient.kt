@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
-private const val TIMEOUT = 5L
+private const val TIMEOUT = 30L
 
 @Singleton
 class BaseHttpClient @Inject constructor(

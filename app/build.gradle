@@ -9,6 +9,8 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -54,6 +56,10 @@ android {
         }
     }
 
+    kapt {
+        correctErrorTypes true
+    }
+
 }
 
 dependencies {
@@ -67,6 +73,10 @@ dependencies {
     implementation Dependencies.daggerHiltExt
     kapt AnnotationProcessing.daggerHiltCompiler
     kapt AnnotationProcessing.daggerHiltCompilerExt
+
+    implementation Dependencies.navigationFragment
+    implementation Dependencies.navigationRuntime
+    implementation Dependencies.navigationUi
 
     implementation Dependencies.retrofit
     implementation Dependencies.retrofitGson

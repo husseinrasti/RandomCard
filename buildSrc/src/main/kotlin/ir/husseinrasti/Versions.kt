@@ -10,6 +10,8 @@ object Versions {
     const val minSdk = 21
     const val targetSdk = 30
 
+    const val navigation = "2.2.2"
+
     const val kotlin = "1.3.72"
     const val ktx = "1.3.1"
     const val fragmentKtx = "1.2.5"

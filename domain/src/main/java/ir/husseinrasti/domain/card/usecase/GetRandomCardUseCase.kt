@@ -13,8 +13,7 @@ class GetRandomCardUseCase @Inject constructor(
     private val repository: CardRepository
 ) : BaseUseCase<GetRandomCardUseCaseParams, ResultState<Card>> {
 
-    override fun invoke(params: GetRandomCardUseCaseParams): Single<ResultState<Card>> =
-        repository.getRandomCard()
+    override fun invoke(params: GetRandomCardUseCaseParams): Single<ResultState<Card>> = repository.getRandomCard()
 
 }
 
