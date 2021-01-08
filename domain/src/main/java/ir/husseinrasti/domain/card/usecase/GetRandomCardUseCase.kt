@@ -11,7 +11,7 @@ import javax.inject.Singleton
 @Singleton
 class GetRandomCardUseCase @Inject constructor(
     private val repository: CardRepository
-) : BaseUseCase<GetRandomCardUseCaseParams, Card> {
+) : BaseUseCase<GetRandomCardUseCaseParams, ResultState<Card>> {
 
     override fun invoke(params: GetRandomCardUseCaseParams): Single<ResultState<Card>> =
         repository.getRandomCard()

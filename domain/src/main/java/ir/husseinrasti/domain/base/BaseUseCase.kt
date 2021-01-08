@@ -4,6 +4,6 @@ import io.reactivex.rxjava3.core.Single
 
 interface BaseUseCase<in Params, Type> {
 
-    operator fun invoke(params: Params): Single<ResultState<Type>>
+    operator fun invoke(params: Params): Single<Type>
 
 }
