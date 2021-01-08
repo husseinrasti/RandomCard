@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="msgEmpty">هیچ نتیجه ای یافت نشد.</string>
+    <string name="msgSuccess">عملیات موفق.</string>
+    <string name="msgFailed">عملیات ناموفق.</string>
+    <string name="msgFailedData">مشکل در دریافت اطلاعات.</string>
+    <string name="msgFailedApiData">مشکل در دریافت اطلاعات از سمت سرور.</string>
+    <string name="msgFailedApiValidation">مشکل در دریافت اطلاعات از سمت سرور.</string>
+    <string name="msgFailedConnection">مشکلی در ارتباط با سرور رخ داده است.</string>
+</resources>
