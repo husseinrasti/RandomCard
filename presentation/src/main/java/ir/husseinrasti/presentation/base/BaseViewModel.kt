@@ -45,23 +45,28 @@ open class BaseViewModel @ViewModelInject constructor() : ViewModel() {
         return when (ext) {
             is Failure.HttpException -> ResultError(
                 code = ResultError.HTTP_EXCEPTION,
-                message = ext.message
+                message = ext.message,
+                show = true
             )
             is Failure.UnknownHostException -> ResultError(
                 code = ResultError.UNKNOWN_HOST_EXCEPTION,
-                message = ext.message
+                message = ext.message,
+                show = true
             )
             is Failure.ApiValidationException -> ResultError(
                 code = ResultError.API_VALIDATION_EXCEPTION,
-                message = ext.message
+                message = ext.message,
+                show = true
             )
             is Failure.FailureWithMessage -> ResultError(
                 code = ResultError.FAILURE,
-                message = ext.message
+                message = ext.message,
+                show = true
             )
             else -> ResultError(
                 code = ResultError.OTHER,
-                message = resources.getString(R.string.error_an_error_occur_try_again)
+                message = resources.getString(R.string.error_an_error_occur_try_again),
+                show = true
             )
         }
     }

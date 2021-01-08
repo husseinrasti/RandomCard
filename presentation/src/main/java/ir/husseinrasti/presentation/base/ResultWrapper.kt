@@ -21,7 +21,7 @@ data class ResultWrapper<T>(
 
 }
 
-class ResultError(val code: Int?, val message: String? = null, var show: Boolean = true) {
+class ResultError(val code: Int?, val message: String? = null, var show: Boolean = false) {
     companion object {
         const val HTTP_EXCEPTION = 100
         const val UNKNOWN_HOST_EXCEPTION = 101

@@ -2,5 +2,6 @@
     <string name="app_name">RandomCard</string>
 
     <string name="error_an_error_occur_try_again">خطایی رخ داده دوباره سعی کنید</string>
+    <string name="btnTry">Try</string>
 
 </resources>
