@@ -12,6 +12,8 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -73,8 +75,14 @@ dependencies {
     implementation Dependencies.lifecycleViewmodel
     implementation Dependencies.lifecycleCommon
 
+    implementation Dependencies.navigationFragment
+    implementation Dependencies.navigationRuntime
+    implementation Dependencies.navigationUi
+
     implementation Dependencies.daggerHilt
     implementation Dependencies.daggerHiltExt
+    kapt AnnotationProcessing.daggerHiltCompiler
+    kapt AnnotationProcessing.daggerHiltCompilerExt
 
     implementation ThirdParty.glide
     annotationProcessor ThirdParty.glideCompiler

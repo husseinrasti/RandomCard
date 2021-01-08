@@ -8,7 +8,7 @@ import ir.husseinrasti.presentation.base.ResultWrapper.Status.*
 
 fun <T> LiveData<ResultWrapper<T>>.observeResult(
     owner: BaseFragment,
-    onSuccess: (result: T) -> Unit
+    onSuccess: (result: T?) -> Unit
 ) {
     observe(owner.viewLifecycleOwner, Observer {
         when (it.status) {
@@ -16,16 +16,12 @@ fun <T> LiveData<ResultWrapper<T>>.observeResult(
                 owner.loading(true)
             }
             SUCCESS -> {
-                it.getResponseIfNotHandled()?.let { response ->
-                    owner.loading(false)
-                    onSuccess(response)
-                }
+                owner.loading(false)
+                onSuccess(it.data)
             }
             ERROR -> {
-                it.getErrorIfNotHandled()?.let { error ->
-                    owner.loading(false)
-                    owner.showError(error)
-                }
+                owner.loading(false)
+                owner.showError(it.error)
             }
         }
     })

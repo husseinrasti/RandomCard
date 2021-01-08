@@ -22,10 +22,14 @@ abstract class BaseFragment : Fragment() {
     abstract fun getLayout(): Int
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        View.inflate(context, getLayout(), container)
+        inflater.inflate(getLayout(), container, false)
 
-    fun showError(error: ResultError) {
-        Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+    fun showError(error: ResultError?) {
+        Toast.makeText(
+            context,
+            error?.message ?: getString(R.string.error_an_error_occur_try_again),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     fun loading(isLoading: Boolean) {

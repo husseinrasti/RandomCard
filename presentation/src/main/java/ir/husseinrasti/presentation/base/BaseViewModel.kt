@@ -5,10 +5,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
-import ir.husseinrasti.domain.base.BaseUseCase
-import ir.husseinrasti.domain.base.FAILED_CODE
-import ir.husseinrasti.domain.base.Failure
-import ir.husseinrasti.domain.base.ResultState
+import ir.husseinrasti.domain.base.*
 import ir.husseinrasti.domain.base.ResultState.Status.*
 import ir.husseinrasti.presentation.R
 import javax.inject.Inject
@@ -18,7 +15,7 @@ open class BaseViewModel @ViewModelInject constructor() : ViewModel() {
     @Inject
     lateinit var resources: Resources
 
-    private val compositeDisposable = CompositeDisposable()
+    protected val compositeDisposable = CompositeDisposable()
 
     override fun onCleared() {
         compositeDisposable.dispose()
@@ -28,15 +25,13 @@ open class BaseViewModel @ViewModelInject constructor() : ViewModel() {
     @Suppress("UNCHECKED_CAST")
     protected fun <RESULT, BODY, DomainObject : ResultState<*>> ResultMutableLiveData<RESULT>.convertRxToLiveData(
         body: BODY,
-        useCase: BaseUseCase<BODY, DomainObject>,
-        doOnSuccess: (() -> Unit)? = null
+        useCase: BaseUseCase<BODY, DomainObject>
     ) {
         useCase.invoke(body)
             .doOnSubscribe { loading() }
             .subscribe { result ->
                 when (result.status) {
                     SUCCESS -> {
-                        doOnSuccess?.invoke()
                         success(result.data as RESULT)
                     }
                     ERROR -> {

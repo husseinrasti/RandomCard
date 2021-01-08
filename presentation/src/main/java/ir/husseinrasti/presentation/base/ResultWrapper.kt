@@ -5,33 +5,6 @@ data class ResultWrapper<T>(
     val data: T? = null,
     val error: ResultError? = null
 ) {
-
-    private var isResponseHandled = false
-    private var isErrorHandled = false
-
-    fun getResponseIfNotHandled(): T? {
-        return if (isResponseHandled) {
-            null
-        } else {
-            isResponseHandled = true
-            data
-        }
-    }
-
-    fun getErrorIfNotHandled(): ResultError? {
-        return if (isErrorHandled) {
-            null
-        } else {
-            isErrorHandled = true
-            error
-        }
-    }
-
-    fun peekError(): ResultError? {
-        isErrorHandled = true
-        return error
-    }
-
     companion object {
 
         fun <T> loading(): ResultWrapper<T> = ResultWrapper(Status.LOADING)
@@ -48,7 +21,7 @@ data class ResultWrapper<T>(
 
 }
 
-class ResultError( val code: Int?, val message: String? = null, var show: Boolean = true) {
+class ResultError(val code: Int?, val message: String? = null, var show: Boolean = true) {
     companion object {
         const val HTTP_EXCEPTION = 100
         const val UNKNOWN_HOST_EXCEPTION = 101
