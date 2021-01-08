@@ -4,7 +4,9 @@ import android.content.res.Resources
 import android.util.Log
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import ir.husseinrasti.data.R
 import ir.husseinrasti.data.base.NetworkBoundResource
+import ir.husseinrasti.data.base.errorResult
 import ir.husseinrasti.data.base.getResponse
 import ir.husseinrasti.data.card.entity.CardWrapper
 import ir.husseinrasti.data.card.remote.CardApi
@@ -21,7 +23,7 @@ class CardDataSource @Inject constructor(
     private val cardApi: CardApi
 ) {
 
-    var listCard = listOf<Card>() //it can be DAO of room
+    var listCard: List<Card>? = null  //it can be DAO of room
 
 //    fun getCards(): Observable<ResultState<List<Card>>> = object : NetworkBoundResource<List<Card>, CardWrapper>(resources) {
 //        override fun saveCallResult(data: CardWrapper) {
@@ -43,11 +45,11 @@ class CardDataSource @Inject constructor(
         cardApi.getCards().getResponse(resources) {
             listCard = it.list.map { item -> item.toDomain() }
         }.map {
-            ResultState(it.status, listCard.random(), it.exp)
+            ResultState(it.status, listCard?.random(), it.exp)
         }
     } else {
-        Single.just(ResultState.success(listCard.random()))
-    }
+        Single.just(ResultState.success(listCard!!.random()))
+    }.errorResult(resources.getString(R.string.msgFailedData))
 
 
 }

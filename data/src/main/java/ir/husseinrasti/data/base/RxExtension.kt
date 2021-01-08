@@ -12,7 +12,7 @@ import java.net.UnknownHostException
 fun <T> Single<T>.validate(message: String): Single<T> = map {
     if (it is Response<*>) {
         if (!it.isSuccessful) {
-            throw Failure.ApiValidationException(it.message(), it.code())
+            throw Failure.ApiValidationException(message, it.code())
         }
     }
     it
