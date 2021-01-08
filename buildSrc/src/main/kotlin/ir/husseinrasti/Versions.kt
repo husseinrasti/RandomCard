@@ -16,7 +16,7 @@ object Versions {
     const val ankoVersion = "0.10.8"
     const val butterKnife = "10.0.0"
     const val dagger = "2.27"
-    const val daggerHilt = "2.28-alpha"
+    const val daggerHilt = "2.30.1-alpha"
     const val javaX = "1"
     const val daggerHiltExt = "1.0.0-alpha02"
     const val rxJava = "3.0.0"

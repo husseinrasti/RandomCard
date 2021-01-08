@@ -11,8 +11,7 @@ buildscript {
     dependencies {
         classpath(Build.buildTools)
         classpath(Build.kotlinGradlePlugin)
-        classpath(Build.googleServices)
-        classpath(Build.crashlyticsGradle)
+        classpath(Build.daggerHilt)
     }
 }
 

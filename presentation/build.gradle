@@ -1,3 +1,4 @@
+import dependencies.AnnotationProcessing
 import dependencies.Java
 import dependencies.Versions
 import dependencies.Application
@@ -50,11 +51,6 @@ android {
         jvmTarget = Java.javaVersion
     }
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-        test.java.srcDirs += 'src/test/kotlin'
-        androidTest.java.srcDirs += 'src/androidTest/kotlin'
-    }
 }
 
 dependencies {
@@ -77,9 +73,8 @@ dependencies {
     implementation Dependencies.lifecycleViewmodel
     implementation Dependencies.lifecycleCommon
 
-    implementation Dependencies.dagger
-    implementation Dependencies.daggerAndroid
-    implementation Dependencies.daggerAndroidSupport
+    implementation Dependencies.daggerHilt
+    implementation Dependencies.daggerHiltExt
 
     implementation ThirdParty.glide
     annotationProcessor ThirdParty.glideCompiler

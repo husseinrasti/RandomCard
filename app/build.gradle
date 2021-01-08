@@ -54,25 +54,19 @@ android {
         }
     }
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-        test.java.srcDirs += 'src/test/kotlin'
-        androidTest.java.srcDirs += 'src/androidTest/kotlin'
-    }
-
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation Dependencies.kotlinStandardLibrary
     implementation Dependencies.ktx
+    implementation Dependencies.multidex
     implementation SupportDependencies.appcompat
 
-    implementation Dependencies.dagger
-    implementation Dependencies.daggerAndroid
-    implementation Dependencies.daggerAndroidSupport
-    kapt AnnotationProcessing.daggerCompiler
-    kapt AnnotationProcessing.daggerCompilerAndroid
+    implementation Dependencies.daggerHilt
+    implementation Dependencies.daggerHiltExt
+    kapt AnnotationProcessing.daggerHiltCompiler
+    kapt AnnotationProcessing.daggerHiltCompilerExt
 
     implementation Dependencies.retrofit
     implementation Dependencies.retrofitGson

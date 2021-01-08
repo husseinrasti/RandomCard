@@ -27,12 +27,6 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-        test.java.srcDirs += 'src/test/kotlin'
-        androidTest.java.srcDirs += 'src/androidTest/kotlin'
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -71,7 +65,7 @@ dependencies {
     implementation Dependencies.okHttp
     implementation Dependencies.okHttpInterceptor
 
-    implementation Dependencies.dagger
+    implementation Dependencies.daggerHilt
 
     implementation Dependencies.rxKotlin
     implementation Dependencies.rxJava
