@@ -1,19 +1,17 @@
 package ir.husseinrasti.presentation.card
 
 import android.content.Context
-import android.media.AudioAttributes
-import android.media.AudioManager
-import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.SimpleExoPlayer
 import ir.husseinrasti.domain.card.entity.Card
 import ir.husseinrasti.presentation.R
 import ir.husseinrasti.presentation.base.BaseFragment
@@ -22,7 +20,6 @@ import ir.husseinrasti.presentation.base.extensions.observeResult
 import ir.husseinrasti.presentation.databinding.FragmentCardBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 
 class CardFragment : BaseFragment() {
 
@@ -30,7 +27,7 @@ class CardFragment : BaseFragment() {
 
     private lateinit var binding: FragmentCardBinding
 
-    private var mediaPlayer: MediaPlayer? = null
+    private var exoPlayer: SimpleExoPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +59,7 @@ class CardFragment : BaseFragment() {
         })
     }
 
-    private fun doWork(card: Card?) = runBlocking(Dispatchers.IO) {
+    private fun doWork(card: Card?) {
         stopSound()
         when (card?.code) {
             1 -> {//vibrate
@@ -81,13 +78,13 @@ class CardFragment : BaseFragment() {
         }
     }
 
-    private fun playSound(sound: String?) = runBlocking(Dispatchers.IO) {
+    private fun playSound(sound: String?) {
         try {
-            mediaPlayer = MediaPlayer().apply {
-                setDataSource(sound)
-                prepare() // might take long! (for buffering, etc)
-                start()
-            }
+            exoPlayer = SimpleExoPlayer.Builder(requireContext()).build()
+            binding.playerView.player = exoPlayer
+            exoPlayer?.addMediaItem(MediaItem.fromUri(sound!!))
+            exoPlayer?.prepare()
+            exoPlayer?.play()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -95,8 +92,8 @@ class CardFragment : BaseFragment() {
 
     private fun stopSound() {
         try {
-            mediaPlayer?.release()
-            mediaPlayer = null
+            exoPlayer?.release()
+            exoPlayer = null
         } catch (e: Exception) {
             e.printStackTrace()
         }

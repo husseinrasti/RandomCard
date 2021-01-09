@@ -10,4 +10,8 @@ object ThirdParty {
     val butterKnife = "com.jakewharton:butterknife:${Versions.butterKnife}"
     val butterknifeCompiler = "com.jakewharton:butterknife-compiler:${Versions.butterKnife}"
 
+    val exoplayerCore = "com.google.android.exoplayer:exoplayer-core:${Versions.exoplayer}"
+    val exoplayerDash = "com.google.android.exoplayer:exoplayer-dash:${Versions.exoplayer}"
+    val exoplayerUI = "com.google.android.exoplayer:exoplayer-ui:${Versions.exoplayer}"
+
 }

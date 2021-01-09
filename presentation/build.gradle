@@ -87,6 +87,10 @@ dependencies {
     kapt AnnotationProcessing.daggerHiltCompiler
     kapt AnnotationProcessing.daggerHiltCompilerExt
 
+    implementation ThirdParty.exoplayerCore
+    implementation ThirdParty.exoplayerDash
+    implementation ThirdParty.exoplayerUI
+
     implementation ThirdParty.glide
     annotationProcessor ThirdParty.glideCompiler
 

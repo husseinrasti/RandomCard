@@ -11,6 +11,7 @@ object Versions {
     const val targetSdk = 30
 
     const val navigation = "2.2.2"
+    const val exoplayer = "2.12.0"
 
     const val kotlin = "1.3.72"
     const val ktx = "1.3.1"

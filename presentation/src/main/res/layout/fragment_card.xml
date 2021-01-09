@@ -95,6 +95,12 @@
                     android:scaleType="fitXY"
                     app:imageUrl="@{card.image}" />
 
+                <com.google.android.exoplayer2.ui.PlayerView
+                    android:id="@+id/playerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:visibility="@{card.code == 2 ? View.VISIBLE : View.GONE  }" />
+
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.cardview.widget.CardView>
