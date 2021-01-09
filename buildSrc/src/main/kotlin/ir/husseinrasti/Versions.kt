@@ -75,6 +75,7 @@ object Versions {
     const val markdownProcessor = "0.1.3"
     const val junitJupiterVersion = "5.6.0"
     const val junitTestAndroidX = "1.1.1"
+    const val supportTest = "1.1.0-alpha1"
     const val espressoTest = "3.2.0"
     const val junit4Version = "4.12"
     const val junit5Version = "1.3.2.0"
@@ -86,11 +87,14 @@ object Versions {
     const val mockitoKotlinVersion = "2.2.0"
     const val mockitoCoreVersion = "3.3.3"
     const val mockitoInlineVersion = "3.3.3"
+    const val mockWebServer = "4.8.0"
+    const val powermockVersion = "1.7.4"
 
     const val fragmentVersion = "1.2.0"
     const val androidxTestExt = "1.1.1"
     const val crashlyticsGradle = "2.4.1"
     const val fabricIo = "1.31.2"
+    const val robolectricVersion = "3.8"
 
     const val circleImageView1 = "2.2.0"
     const val circleImageView2 = "4.0.1"
