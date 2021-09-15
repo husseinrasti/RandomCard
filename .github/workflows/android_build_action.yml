@@ -29,7 +29,6 @@ jobs:
       - name: Upload artifact APK
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: Build APK
           path: app/build/outputs/apk/develop/release/
           if-no-files-found: error
           retention-days: 1
