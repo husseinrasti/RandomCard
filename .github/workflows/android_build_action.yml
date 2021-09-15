@@ -8,14 +8,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    steps:
-      - name: Decode keystore
-        id: decode_keystore
-        uses: timheuer/base64-to-file@v1.1
-        with:
-          fileName: 'key/keystore'
-          encodeString: ${{ secrets.KEYSTORE }}
-        
+    steps:        
       - uses: actions/checkout@v2
       - name: set up JDK 11
         uses: actions/setup-java@v2
