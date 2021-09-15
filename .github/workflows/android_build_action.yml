@@ -31,15 +31,12 @@ jobs:
         with:
           filename: 'app/build/outputs/apk/develop/release/output-metadata.json'
           prefix: var
-#      - name: Set Name Variables
-#        run: |
-#          echo "name=$(jg '."elements" | .[] | ."outputFile"')" >> $GITHUB_ENV
 
       - name: Upload APK
         uses: actions/upload-artifact@v2.2.4
         with:
           name: ${{ env.var_elements_0_outputFile }}
-          path: app/build/outputs/apk/develop/release/
+          path: app/build/outputs/apk/develop/release/${{ env.var_elements_0_outputFile }}
           if-no-files-found: error
           retention-days: 1
 
