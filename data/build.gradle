@@ -54,6 +54,21 @@ android {
             includeAndroidResources = true
         }
     }
+
+    flavorDimensions "default"
+    productFlavors {
+        production {
+            applicationId Application.id
+            dimension "default"
+        }
+        develop {
+            applicationId Application.id
+            applicationIdSuffix ".develop"
+            versionNameSuffix "-dev"
+            dimension "default"
+        }
+    }
+
 }
 
 dependencies {

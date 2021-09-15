@@ -4,9 +4,9 @@ import dependencies.Repositories
 buildscript {
     repositories {
         google()
-        jcenter()
-        maven { url = Repositories.jitPack }
         mavenCentral()
+        maven { url = Repositories.jitPack }
+        jcenter()
     }
     dependencies {
         classpath(Build.buildTools)
@@ -19,9 +19,9 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
-        maven { url = Repositories.jitPack }
         mavenCentral()
+        maven { url = Repositories.jitPack }
+        jcenter()
     }
 }
 

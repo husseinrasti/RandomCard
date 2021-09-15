@@ -3,7 +3,7 @@ package dependencies
 object Versions {
 
     const val multidex = "2.0.1"
-    const val gradle = "4.0.1"
+    const val gradle = "4.1.2"
 
     const val buildToolsVersion = "30.0.1"
     const val compileSdk = 30
@@ -13,8 +13,8 @@ object Versions {
     const val navigation = "2.2.2"
     const val exoplayer = "2.12.0"
 
-    const val kotlin = "1.3.72"
-    const val ktx = "1.3.1"
+    const val kotlin = "1.4.21"
+    const val ktx = "1.6.0"
     const val fragmentKtx = "1.2.5"
     const val ankoVersion = "0.10.8"
     const val butterKnife = "10.0.0"

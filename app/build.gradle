@@ -30,6 +30,15 @@ android {
         flavorDimensions "default"
     }
 
+    signingConfigs {
+        release {
+            storeFile file('key/keystore')
+            storePassword System.getenv("SIGNING_STORE_PASSWORD")
+            keyAlias System.getenv("SIGNING_KEY_ALIAS")
+            keyPassword System.getenv("SIGNING_KEY_PASSWORD")
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
@@ -63,6 +72,27 @@ android {
     buildFeatures {
         dataBinding true
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "randomcard_${variant.name}_v.${variant.versionName}.apk"
+        }
+    }
+
+    flavorDimensions "default"
+    productFlavors {
+        production {
+            applicationId Application.id
+            dimension "default"
+        }
+        develop {
+            applicationId Application.id
+            applicationIdSuffix ".develop"
+            versionNameSuffix "-dev"
+            dimension "default"
+        }
+    }
+
 }
 
 dependencies {
