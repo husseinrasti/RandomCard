@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:        
       - uses: actions/checkout@v2
+      - run: mkdir -p apk/develop
+      
       - name: set up JDK 11
         uses: actions/setup-java@v2
         with:
@@ -26,12 +28,14 @@ jobs:
           SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           SIGNING_STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
 
-      - name: Make APK
+      - name: Upload artifact APK
         uses: actions/upload-artifact@v2.2.4
         with:
-          path: apk/develop/
+          name: Build Artifacts
+          path: apk/develop/*
+          retention-days: 1
           
-      - name: Upload file to Slack
+      - name: Upload file on Slack
         uses: adrey/slack-file-upload-action@1.0.5
         with:
           path: apk/develop/*.apk
