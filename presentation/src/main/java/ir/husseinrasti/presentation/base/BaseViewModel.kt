@@ -1,8 +1,8 @@
 package ir.husseinrasti.presentation.base
 
 import android.content.res.Resources
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import ir.husseinrasti.domain.base.*
@@ -10,7 +10,8 @@ import ir.husseinrasti.domain.base.ResultState.Status.*
 import ir.husseinrasti.presentation.R
 import javax.inject.Inject
 
-open class BaseViewModel @ViewModelInject constructor() : ViewModel() {
+@HiltViewModel
+open class BaseViewModel @Inject constructor() : ViewModel() {
 
     @Inject
     lateinit var resources: Resources

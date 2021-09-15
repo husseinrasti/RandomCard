@@ -30,14 +30,11 @@ android {
         versionName Application.versionName
 
         testInstrumentationRunner AndroidTestDependencies.testInstrumentationRunner
-        consumerProguardFiles "consumer-rules.pro"
-        flavorDimensions "default"
     }
 
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             minifyEnabled false
@@ -60,13 +57,9 @@ android {
     flavorDimensions "default"
     productFlavors {
         production {
-            applicationId Application.id
             dimension "default"
         }
         develop {
-            applicationId Application.id
-            applicationIdSuffix ".develop"
-            versionNameSuffix "-dev"
             dimension "default"
         }
     }
@@ -98,9 +91,7 @@ dependencies {
     implementation Dependencies.navigationUi
 
     implementation Dependencies.daggerHilt
-    implementation Dependencies.daggerHiltExt
     kapt AnnotationProcessing.daggerHiltCompiler
-    kapt AnnotationProcessing.daggerHiltCompilerExt
 
     implementation ThirdParty.exoplayerCore
     implementation ThirdParty.exoplayerDash

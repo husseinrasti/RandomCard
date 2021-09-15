@@ -16,9 +16,6 @@ object Dependencies {
 
     val daggerHilt = "com.google.dagger:hilt-android:${Versions.daggerHilt}"
     val daggerHiltExt = "androidx.hilt:hilt-lifecycle-viewmodel:${Versions.daggerHiltExt}"
-    val dagger = "com.google.dagger:dagger:${Versions.dagger}"
-    val daggerAndroid = "com.google.dagger:dagger-android:${Versions.dagger}"
-    val daggerAndroidSupport = "com.google.dagger:dagger-android-support:${Versions.dagger}"
     val javaX = "javax.inject:javax.inject:${Versions.javaX}"
 
     val rxKotlin = "io.reactivex.rxjava3:rxkotlin:${Versions.rxJava}"

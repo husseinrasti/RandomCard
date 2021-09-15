@@ -82,11 +82,9 @@ android {
     flavorDimensions "default"
     productFlavors {
         production {
-            applicationId Application.id
             dimension "default"
         }
         develop {
-            applicationId Application.id
             applicationIdSuffix ".develop"
             versionNameSuffix "-dev"
             dimension "default"
@@ -103,9 +101,7 @@ dependencies {
     implementation SupportDependencies.appcompat
 
     implementation Dependencies.daggerHilt
-    implementation Dependencies.daggerHiltExt
     kapt AnnotationProcessing.daggerHiltCompiler
-    kapt AnnotationProcessing.daggerHiltCompilerExt
 
     implementation Dependencies.navigationFragment
     implementation Dependencies.navigationRuntime

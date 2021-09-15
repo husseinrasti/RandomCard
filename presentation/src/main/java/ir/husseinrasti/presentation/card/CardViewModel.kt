@@ -1,12 +1,14 @@
 package ir.husseinrasti.presentation.card
 
-import androidx.hilt.lifecycle.ViewModelInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.husseinrasti.domain.card.entity.Card
 import ir.husseinrasti.domain.card.usecase.GetRandomCardUseCase
 import ir.husseinrasti.domain.card.usecase.GetRandomCardUseCaseParams
 import ir.husseinrasti.presentation.base.*
+import javax.inject.Inject
 
-class CardViewModel @ViewModelInject constructor(
+@HiltViewModel
+class CardViewModel @Inject constructor(
     private val getRandomCardUseCase: GetRandomCardUseCase
 ) : BaseViewModel() {
 

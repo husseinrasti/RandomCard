@@ -1,29 +1,112 @@
 import dependencies.dependencies.*
+import dependencies.AnnotationProcessing
+import dependencies.Java
+import dependencies.Versions
+import dependencies.Application
+import dependencies.dependencies.*
 
 plugins {
-    id 'java-library'
-    id 'kotlin'
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
+
+android {
+    androidExtensions { experimental = true }
+
+    compileSdkVersion Versions.compileSdk
+    buildToolsVersion Versions.buildToolsVersion
+
+    defaultConfig {
+        multiDexEnabled true
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+        versionCode Application.versionCode
+        versionName Application.versionName
+
+        testInstrumentationRunner AndroidTestDependencies.testInstrumentationRunner
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+        }
+        debug {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = Java.javaVersion
+        freeCompilerArgs = ["-XXLanguage:+InlineClasses"]
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    flavorDimensions "default"
+    productFlavors {
+        production {
+            dimension "default"
+        }
+        develop {
+            dimension "default"
+        }
+    }
+
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
     implementation Dependencies.kotlinStandardLibrary
     implementation Dependencies.ktx
-    implementation Dependencies.rxJava
-    implementation Dependencies.rxKotlin
-    implementation Dependencies.rxAndroid
+
+    implementation Dependencies.retrofit
+    implementation Dependencies.retrofitGson
+    implementation Dependencies.retrofitRxJavaAdapter
+    implementation Dependencies.googleGson
+    implementation Dependencies.okHttp
+    implementation Dependencies.okHttpInterceptor
+
     implementation Dependencies.daggerHilt
-    testImplementation TestDependencies.junit4
+
+    implementation Dependencies.rxKotlin
+    implementation Dependencies.rxJava
+    implementation Dependencies.rxAndroid
+
+    androidTestImplementation TestDependencies.testRules
+    androidTestImplementation TestDependencies.testRunner
+    testImplementation TestDependencies.mockk
+    testImplementation TestDependencies.mockkAndroid
+    testImplementation TestDependencies.kotlinTest
+    testImplementation TestDependencies.textCoreKtx
+    testImplementation TestDependencies.coroutinesTest
+    testImplementation TestDependencies.androidxTestExt
     testImplementation TestDependencies.mockito
     testImplementation TestDependencies.mockitoInline
     testImplementation TestDependencies.mockitoKotlin
-}
+    testImplementation TestDependencies.mockWebServer
+    testImplementation TestDependencies.robolectric
+    androidTestImplementation TestDependencies.mockWebServer
+    testImplementation TestDependencies.jupiterApi
+    testImplementation TestDependencies.jupiterParams
+    testImplementation TestDependencies.junit4
+    testImplementation TestDependencies.powermockModuleJunit4
+    testImplementation TestDependencies.powermockApiMockito
+    testRuntimeOnly TestDependencies.jupiterEngine
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+    testAnnotationProcessor AnnotationProcessing.daggerHiltCompiler
+    androidTestAnnotationProcessor AnnotationProcessing.daggerHiltCompiler
 
-compileKotlin {
-    kotlinOptions {
-        freeCompilerArgs = ["-XXLanguage:+InlineClasses"]
-    }
+    androidTestImplementation TestDependencies.junitTestAndroidX
 }
