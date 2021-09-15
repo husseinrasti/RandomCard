@@ -1,0 +1,48 @@
+name: Android Build Develop Release
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Decode keystore
+        id: decode_keystore
+        uses: timheuer/base64-to-file@v1.1
+        with:
+          fileName: 'key/keystore'
+          encodeString: ${{ secrets.KEYSTORE }}
+        
+      - uses: actions/checkout@v2
+      - name: set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew assembleDevelopRelease
+        env:
+          SIGNING_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+
+      - name: Make APK
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          path: apk/develop/
+          
+      - name: Upload file to Slack
+        uses: adrey/slack-file-upload-action@1.0.5
+        with:
+          path: apk/develop/*.apk
+          token: ${{ secrets.SLACK_TOKEN }}
+          filetype: apk
+          channel : ${{ secrets.SLACK_CHANNEL_NAME }}
+          
