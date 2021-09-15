@@ -47,12 +47,6 @@ android {
         freeCompilerArgs = ["-XXLanguage:+InlineClasses"]
     }
 
-    testOptions {
-        unitTests {
-            includeAndroidResources = true
-        }
-    }
-
     flavorDimensions "default"
     productFlavors {
         production {
