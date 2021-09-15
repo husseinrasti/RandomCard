@@ -32,14 +32,15 @@ jobs:
         uses: actions/upload-artifact@v2.2.4
         with:
           name: Build Artifacts
-          path: apk/develop/*
+          path: apk/develop/randomCardDevelop.apk
+          if-no-files-found: error
           retention-days: 1
           
-      - name: Upload file on Slack
-        uses: adrey/slack-file-upload-action@1.0.5
-        with:
-          path: apk/develop/*.apk
-          token: ${{ secrets.SLACK_TOKEN }}
-          filetype: apk
-          channel : ${{ secrets.SLACK_CHANNEL_NAME }}
+#      - name: Upload file on Slack
+#        uses: adrey/slack-file-upload-action@1.0.5
+#        with:
+#          path: apk/develop/randomCardDevelop.apk
+#          token: ${{ secrets.SLACK_TOKEN }}
+#          filetype: apk
+#          channel : ${{ secrets.SLACK_CHANNEL_NAME }}
           
