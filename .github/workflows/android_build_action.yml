@@ -26,18 +26,23 @@ jobs:
           SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           SIGNING_STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
 
-      - name: Upload artifact APK
+      - name: Set Name Variables
+        run: |
+          echo "version=$(git rev-list --count --all)" >> $GITHUB_ENV
+          echo "name=DevelopRelease_v." >> $GITHUB_ENV
+
+      - name: Upload APK
         uses: actions/upload-artifact@v2.2.4
         with:
-          path: app/build/outputs/apk/develop/release/*.apk
+          name: ${{ env.name }}${{ env.version }}.zip
+          path: app/build/outputs/apk/develop/release/
           if-no-files-found: error
           retention-days: 1
 
-#      - name: Upload file on Slack
-#        uses: adrey/slack-file-upload-action@1.0.5
-#        with:
-#          path: apk/develop/randomCardDevelop.apk
-#          token: ${{ secrets.SLACK_TOKEN }}
-#          filetype: apk
-#          channel : ${{ secrets.SLACK_CHANNEL_NAME }}
-          
+      - name: Upload file on Slack
+        uses: adrey/slack-file-upload-action@1.0.5
+        with:
+          path: app/build/outputs/apk/develop/release/
+          token: ${{ secrets.SLACK_TOKEN }}
+          filetype: apk
+          channel : ${{ secrets.SLACK_CHANNEL_NAME }}
