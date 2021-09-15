@@ -26,15 +26,19 @@ jobs:
           SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           SIGNING_STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
 
-      - name: Set Name Variables
-        run: |
-          echo "version=$(git rev-list --count --all)" >> $GITHUB_ENV
-          echo "name=DevelopRelease_v." >> $GITHUB_ENV
+      - name: Metadata build to variables
+        uses: antifree/json-to-variables@v1.0.1
+        with:
+          filename: 'app/build/outputs/apk/develop/release/output-metadata.json'
+          prefix: var
+#      - name: Set Name Variables
+#        run: |
+#          echo "name=$(jg '."elements" | .[] | ."outputFile"')" >> $GITHUB_ENV
 
       - name: Upload APK
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: ${{ env.name }}${{ env.version }}.zip
+          name: ${{ env.var_elements_0_outputFile }}
           path: app/build/outputs/apk/develop/release/
           if-no-files-found: error
           retention-days: 1
