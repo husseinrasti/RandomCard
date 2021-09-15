@@ -20,7 +20,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew assembleRelease
+        run: ./gradlew assembleDevelopRelease
         env:
           SIGNING_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
@@ -29,7 +29,7 @@ jobs:
       - name: Upload artifact APK
         uses: actions/upload-artifact@v2.2.4
         with:
-          path: app/build/outputs/apk/develop/release/
+          path: app/build/outputs/apk/develop/release/*.apk
           if-no-files-found: error
           retention-days: 1
 
