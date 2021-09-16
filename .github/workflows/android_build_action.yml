@@ -20,30 +20,34 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew assembleDevelopDebug
-        env:
-          SIGNING_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-          SIGNING_STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+        run: ./gradlew assembleDevelopRelease
+            -Pandroid.injected.signing.store.file=key/keystore
+            -Pandroid.injected.signing.store.password=${{ secrets.STORE_PASSWORD }}
+            -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }}
+            -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
+#        env:
+#          SIGNING_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+#          SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+#          SIGNING_STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
 
       - name: Metadata build to variables
         uses: antifree/json-to-variables@v1.0.1
         with:
-          filename: 'app/build/outputs/apk/develop/debug/output-metadata.json'
+          filename: 'app/build/outputs/apk/develop/release/output-metadata.json'
           prefix: var
 
       - name: Upload APK
         uses: actions/upload-artifact@v2.2.4
         with:
           name: ${{ env.var_elements_0_outputFile }}
-          path: app/build/outputs/apk/develop/debug/${{ env.var_elements_0_outputFile }}
+          path: app/build/outputs/apk/develop/release/${{ env.var_elements_0_outputFile }}
           if-no-files-found: error
           retention-days: 1
 
       - name: Upload file on Slack
         uses: adrey/slack-file-upload-action@1.0.5
         with:
-          path: app/build/outputs/apk/develop/debug/${{ env.var_elements_0_outputFile }}
+          path: app/build/outputs/apk/develop/release/${{ env.var_elements_0_outputFile }}
           token: ${{ secrets.SLACK_TOKEN }}
           filetype: apk
           channel : ${{ secrets.SLACK_CHANNEL_ID }}
