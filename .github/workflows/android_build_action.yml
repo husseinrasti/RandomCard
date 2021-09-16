@@ -17,18 +17,22 @@ jobs:
           distribution: 'adopt'
           cache: gradle
 
+      - name: Create Signing File
+      - run: echo "${{ secrets.KEYSTORE }}" | base64 -d > $GITHUB_WORKSPACE/signing-key.jks
+          shell: bash
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew assembleDevelopRelease
-            -Pandroid.injected.signing.store.file=key/keystore
-            -Pandroid.injected.signing.store.password=${{ secrets.STORE_PASSWORD }}
-            -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }}
-            -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
-#        env:
-#          SIGNING_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-#          SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-#          SIGNING_STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+          -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/signing-key.jks
+          -Pandroid.injected.signing.store.password=${{ secrets.STORE_PASSWORD }}
+          -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }}
+          -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
+        env:
+          SIGNING_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
 
       - name: Metadata build to variables
         uses: antifree/json-to-variables@v1.0.1
@@ -50,4 +54,4 @@ jobs:
           path: app/build/outputs/apk/develop/release/${{ env.var_elements_0_outputFile }}
           token: ${{ secrets.SLACK_TOKEN }}
           filetype: apk
-          channel : ${{ secrets.SLACK_CHANNEL_ID }}
+          channel: ${{ secrets.SLACK_CHANNEL_ID }}
