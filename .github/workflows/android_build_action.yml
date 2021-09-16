@@ -19,7 +19,6 @@ jobs:
 
       - name: Create Signing File
       - run: echo "${{ secrets.KEYSTORE }}" | base64 -d > $GITHUB_WORKSPACE/signing-key.jks
-          shell: bash
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
