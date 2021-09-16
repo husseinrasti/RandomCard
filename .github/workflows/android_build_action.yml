@@ -18,7 +18,7 @@ jobs:
           cache: gradle
 
       - name: Create Signing File
-      - run: echo "${{ secrets.KEYSTORE }}" | base64 -d > $GITHUB_WORKSPACE/signing-key.jks
+      - run: echo ${{ secrets.KEYSTORE }} | base64 --decode > $GITHUB_WORKSPACE/signing-key.jks
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -54,3 +54,6 @@ jobs:
           token: ${{ secrets.SLACK_TOKEN }}
           filetype: apk
           channel: ${{ secrets.SLACK_CHANNEL_ID }}
+
+      - name: Remove Signing File
+      - run: rm $GITHUB_WORKSPACE/signing-key.jks
