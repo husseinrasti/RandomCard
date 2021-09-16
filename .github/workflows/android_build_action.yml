@@ -18,13 +18,17 @@ jobs:
           cache: gradle
 
       - name: Create Signing File
-      - run: echo ${{ secrets.KEYSTORE }} | base64 --decode > $GITHUB_WORKSPACE/signing-key.jks
+      - id: signing_file
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'signing-key.jks'
+          encodedString: ${{ secrets.KEYSTORE }}
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew assembleDevelopRelease
-          -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/signing-key.jks
+          -Pandroid.injected.signing.store.file=${{ steps.signing_file.outputs.filePath }}
           -Pandroid.injected.signing.store.password=${{ secrets.STORE_PASSWORD }}
           -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }}
           -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
@@ -54,6 +58,3 @@ jobs:
           token: ${{ secrets.SLACK_TOKEN }}
           filetype: apk
           channel: ${{ secrets.SLACK_CHANNEL_ID }}
-
-      - name: Remove Signing File
-      - run: rm $GITHUB_WORKSPACE/signing-key.jks
