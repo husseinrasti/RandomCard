@@ -43,7 +43,7 @@ jobs:
       - name: Upload file on Slack
         uses: adrey/slack-file-upload-action@1.0.5
         with:
-          path: app/build/outputs/apk/develop/release/
+          path: app/build/outputs/apk/develop/release/${{ env.var_elements_0_outputFile }}
           token: ${{ secrets.SLACK_TOKEN }}
           filetype: apk
           channel : ${{ secrets.SLACK_CHANNEL_NAME }}
